@@ -1,0 +1,44 @@
+.container {
+    width: 500px;
+    height: 700px;
+    background-color: rgb(177, 177, 177);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.screen {
+    width: 450px;
+    height: 100px;
+    background-color: rgb(148, 230, 148);
+    margin: 40px 0 100px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.output-box {
+    font-size: 64px;
+    padding-right: 10px;
+}
+
+.numbers,
+.operations {
+    width: 400px;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.numbers {
+    margin-bottom: 24px;
+}
+
+button {
+    font-size: 20px;
+    font-weight: bold;
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+}
