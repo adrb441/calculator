@@ -1,30 +1,129 @@
-function add(x, y) {
-    return x + y;
+function add(num1, num2) {
+    return num1 + num2;
 }
 
-function subtract(x, y) {
-    return x - y;
+function subtract(num1, num2) {
+    return num1 - num2;
 }
 
-function multiply(x, y) {
-    return x * y;
+function multiply(num1, num2) {
+    return num1 * num2;
 }
 
-function divide(x, y) {
-    return x / y;
+function divide(num1, num2) {
+    return num1 / num2;
+}
+
+function operate(num1, op, num2) {
+    if (num2 === null) return num1;
+    if (op === '+') {
+        return add(num1, num2);
+    } else if (op === '-') {
+        return subtract(num1, num2);
+    } else if (op === '*') {
+        return multiply(num1, num2);
+    } else if (op === '/') {
+        return divide(num1, num2);
+    }
+}
+
+function getScreenData() {
+    const data = document.querySelector('.output');
+    return parseInt(data.textContent);
+}
+
+function clearScreen() {
+    const screen = document.querySelector('.output');
+    screen.textContent = '';
+}
+
+function fullClear() {
+    clearScreen();
+    firstNumber = '';
+    secondNumber = '';
+    currentNumber = '';
+    operator = '';
+    nextOperator = '';
+    lastButtonPressed = '';
+}
+
+function evaluate(input) {
+    secondNumber = currentNumber;
+    if (divideByZeroCheck(input)) {
+        return;
+    } else {
+        const result = operate(firstNumber, operator, secondNumber);
+        clearScreen();
+        printToScreen(result);
+        firstNumber = result;
+        secondNumber = '';
+    }
+    if (input === '=') {
+        operator = '';
+    } else {
+        operator = nextOperator;
+    }
+    nextOperator = '';
+}
+
+function divideByZeroCheck(input) {
+    if (secondNumber === 0 && operator === '/') {
+        fullClear();
+        printToScreen("ERROR '/' by '0'");
+        lastButtonPressed = input;
+        return true;
+    }
+
+    return false;
+}
+
+function handleOperation(input) {
+    if (input === 'C') {
+        fullClear();
+    } else if (input === '=') {
+        if (!firstNumber || !operator || isNaN(lastButtonPressed)) {
+            lastButtonPressed = input;
+            return;
+        }
+        evaluate(input);
+    } else {
+        if (!operator) {
+            operator = input;
+        } else {
+            nextOperator = input;
+        }
+        if (!firstNumber) {
+            firstNumber = currentNumber;
+        } else if (nextOperator) {
+            evaluate(input);
+        }
+    }
+    lastButtonPressed = input;
+}
+
+function handleNumber(input) {
+    if (isNaN(lastButtonPressed)) {
+        clearScreen();
+        if (lastButtonPressed === '=') {
+            firstNumber = '';
+        }
+    }
+    printToScreen(input);
+    currentNumber = getScreenData();
+    lastButtonPressed = input;
 }
 
 function buttonPressed(e) {
     const input = e.target.textContent;
     if (isNaN(input)) {
-        outputToScreen("");
+        handleOperation(input);
     } else {
-        outputToScreen(e.target.textContent);
+        handleNumber(input);
     }
 }
 
-function outputToScreen(output) {
-    const outputBox = document.querySelector('.output-box');
+function printToScreen(output) {
+    const outputBox = document.querySelector('.output');
     if (outputBox.textContent === "Calculator" || output === "") {
         outputBox.textContent = output;
     } else {
@@ -32,14 +131,15 @@ function outputToScreen(output) {
     }
 }
 
+let currentNumber = '';
+let firstNumber = '';
+let secondNumber = '';
+let operator = '';
+let nextOperator = '';
+let lastButtonPressed = '';
+let needToClear = false;
+
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => {
     button.addEventListener('click', buttonPressed);
 });
-
-/*const x = 9;
-const y = 4;
-console.log(add(x,y));
-console.log(subtract(x,y));
-console.log(multiply(x,y));
-console.log(divide(x,y));*/
