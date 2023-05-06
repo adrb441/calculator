@@ -78,6 +78,7 @@ function divideByZeroCheck(input) {
 }
 
 function handleOperation(input) {
+    enableButton('decimal');
     if (input === 'C') {
         fullClear();
     } else if (input === '=') {
@@ -110,16 +111,33 @@ function handleNumber(input) {
     }
     printToScreen(input);
     currentNumber = getScreenData();
-    lastButtonPressed = input;
+    if (input === '.') {
+        lastButtonPressed = 0;
+    } else {
+        lastButtonPressed = input;
+    }
 }
 
 function buttonPressed(e) {
     const input = e.target.textContent;
+    if (input === '.') {
+        disableButton('decimal');
+    }
     if (isNaN(input) && input !== '.') {
         handleOperation(input);
     } else {
         handleNumber(input);
     }
+}
+
+function disableButton(button) {
+    const btn = document.querySelector('.' + button);
+    btn.disabled = true;
+}
+
+function enableButton(button) {
+    const btn = document.querySelector('.' + button);
+    btn.disabled = false;
 }
 
 function printToScreen(output) {
