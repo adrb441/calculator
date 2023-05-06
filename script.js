@@ -29,7 +29,7 @@ function operate(num1, op, num2) {
 
 function getScreenData() {
     const data = document.querySelector('.output');
-    return parseInt(data.textContent);
+    return parseFloat(data.textContent);
 }
 
 function clearScreen() {
@@ -102,7 +102,7 @@ function handleOperation(input) {
 }
 
 function handleNumber(input) {
-    if (isNaN(lastButtonPressed)) {
+    if (isNaN(lastButtonPressed) && lastButtonPressed != '.') {
         clearScreen();
         if (lastButtonPressed === '=') {
             firstNumber = '';
@@ -115,7 +115,7 @@ function handleNumber(input) {
 
 function buttonPressed(e) {
     const input = e.target.textContent;
-    if (isNaN(input)) {
+    if (isNaN(input) && input !== '.') {
         handleOperation(input);
     } else {
         handleNumber(input);
