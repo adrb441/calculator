@@ -32,6 +32,11 @@ function getScreenData() {
     return parseFloat(data.textContent);
 }
 
+function getScreenDatalength() {
+    const length = document.querySelector('.output');
+    return length.textContent.length;
+}
+
 function clearScreen() {
     const screen = document.querySelector('.output');
     screen.textContent = '';
@@ -109,7 +114,9 @@ function handleNumber(input) {
             firstNumber = '';
         }
     }
-    printToScreen(input);
+    if (getScreenDatalength() < 13) {
+        printToScreen(input);
+    }
     currentNumber = getScreenData();
     if (input === '.') {
         lastButtonPressed = 0;
@@ -141,11 +148,17 @@ function enableButton(button) {
 }
 
 function printToScreen(output) {
-    const outputBox = document.querySelector('.output');
-    if (outputBox.textContent === "Calculator" || output === "") {
-        outputBox.textContent = output;
+    const print = document.querySelector('.output');
+    if (output.toString().length > 13) {
+        output = Number(output).toPrecision(11);
+        if (output.toString().length > 13) {
+            output = Number(output).toPrecision(9);
+        }
+    }
+    if (print.textContent === "Calculator") {
+        print.textContent = output;
     } else {
-        outputBox.textContent += output;
+        print.textContent += output;
     }
 }
 
