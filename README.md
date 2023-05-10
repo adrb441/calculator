@@ -1,2 +1,2 @@
 # calculator
-Browser based on screen calculator developed using JavaScript, HTML, and CSS.
+Browser based on screen calculator developed using JavaScript, HTML, and CSS. This calculator can calculate addition, subtraction, multiplication, and division. It can take in integer numbers and decimal numbers. Operations can be chained together, where the running result is displayed between operations. A maximum of 13 characters can be displayed, numbers are rounded accordingly. A clear button is incorporated to reset all running values. All buttons and display box are aligned using flexbox.
